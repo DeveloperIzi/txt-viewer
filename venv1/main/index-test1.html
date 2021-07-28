@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> div test </title>
+        <style>
+            body {
+                padding: 0px;
+                margin: 0px;
+            }
+            .wrapper {
+                position: relative;
+            }
+            .dashed-box {
+                position: relative;
+                z-index: 1;
+                border: dashed;
+                height: 99vh;
+            }
+            .gold-box {
+                position: absolute;
+                z-index: 3;
+                background: gold;
+                height: 80vh;
+                width: 20%;
+                left: 0%;
+                top: 10%;
+            }
+            .green-box {
+                position: absolute;
+                z-index: 3;
+                background: lightgreen;
+                width: 20%;
+                left: 80%;
+                top: 10%;
+                height: 80vh;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="dashed-box">main box</div>
+            <div class="gold-box">left box</div>
+            <div class="green-box">right box</div>
+          </div>
+    </body>
+</html>

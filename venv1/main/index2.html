@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="kr" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> TXT VIEWER</title>
+        <link rel="icon" href="image/icon.png">
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript">
+            var number = 1;
+            var maxLength = 15902;
+
+            document.onkeydown = function(event) {
+                event = event || window.event;
+                /*
+                if (event.ctrlKey && event.keyCode == 90) {
+                    alert("Ctrl-Z");
+                }
+                */
+
+                var keycode = event.keyCode;
+
+                if (keycode == 8) { // 백스페이스, F5
+                    event.returnValue = false; // 브라우저 기능 키 무효화
+                }
+
+                if (keycode == 39 && !(event.ctrlKey)) {
+                    onClickRight();
+                } else if (keycode == 39 && event.ctrlKey) {
+                    onClickRightT();
+                }
+
+                if (keycode == 37 && !(event.ctrlKey)) {
+                    onClickLeft();
+                } else if (keycode == 37 && event.ctrlKey) {
+                    onClickLeftT();
+                }
+
+                if (keycode == 38) {
+                    onDirectoryChangeLeft();
+                } else if (keycode == 40) {
+                    onDirectoryChangeRight();
+                }
+            };
+
+            function onClickLeft() {
+                number --;
+                if (number < 1) {
+                  number = maxLength;
+                }
+
+                document.getElementById('number').innerHTML = " | " + number + " / " + maxLength + " ( " + (number / maxLength * 100).toFixed(2) + "% )";
+                document.getElementById('imgbox').src = number + '.png';
+            }
+
+            function onClickRight() {
+                number ++;
+                if (number > maxLength) {
+                    number = 1;
+                }
+
+                document.getElementById('number').innerHTML = " | " + number + " / " + maxLength + " ( " + (number / maxLength * 100).toFixed(2) + "% )";
+                document.getElementById('imgbox').src = number + '.png';
+            }
+
+            function onClickLeftT() {
+                number -= 10;
+                if (number < 1) {
+                  number = maxLength;
+                }
+
+                document.getElementById('number').innerHTML = " | " + number + " / " + maxLength + " ( " + (number / maxLength * 100).toFixed(2) + "% )";
+                document.getElementById('imgbox').src = number + '.png';
+            }
+
+            function onClickRightT() {
+                number += 10;
+                if (number > maxLength) {
+                    number = 1;
+                }
+
+                document.getElementById('number').innerHTML = " | " + number + " / " + maxLength + " ( " + (number / maxLength * 100).toFixed(2) + "% )";
+                document.getElementById('imgbox').src = number + '.png';
+            }
+
+            function hideButtons() {
+                if (document.getElementById("all_button").style.display === "none") {
+                    document.getElementById("all_button").style.display = "flex";
+                    document.getElementById("title").style.display = "flex";
+                    document.getElementById("hide_button").innerHTML = "숨기기";
+                } else {
+                    document.getElementById("all_button").style.display = "none";
+                    document.getElementById("title").style.display = "none";
+                    document.getElementById("hide_button").innerHTML = "보이기";
+                }
+            }
+        </script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                background-color: #ffffff;
+            }
+            
+            p {
+                z-index: 1;
+                color: black;
+            }
+
+            div.ab {
+                position: absolute;
+            }
+            
+            div.title {
+                z-index: 3;
+                width: 100%;
+                height: 3em;
+                background-color: #ffffff;
+                text-align: center;
+                display: flex;
+            }
+
+            div.main {
+                z-index: 2;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+            }
+            div.button {
+                z-index: 4;
+                padding-top: 0.1em;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            div.all_button {
+                z-index: 3;
+                margin-top: 4em;
+                display: block;
+            }
+            #hide_button {
+              background-color: white;
+            }
+
+            .navbar {
+                z-index: 10;
+                overflow: hidden;
+                background-color: #ffffff;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+
+            div.titleNav {
+                z-index: 3;
+                text-align: center;
+                margin-bottom: 0.7em;
+                padding-left: 2em;
+                height: 3em;
+                background-color: #ffffff;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+            }
+            .wrapper {
+                position: relative;
+            }
+            .dashed-box {
+                position: relative;
+                z-index: 1;
+                height: 100vh;
+            }
+            .left-box {
+                position: absolute;
+                z-index: 3;
+                height: 80vh;
+                width: 20%;
+                left: 0%;
+                top: 10%;
+            }
+            .right-box {
+                position: absolute;
+                z-index: 3; 
+                width: 20%;
+                left: 80%;
+                top: 10%;
+                height: 80vh;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="title ab" id="title">
+            <p style="font-size: 15px; font-weight: 1000; padding-left: 1.5em; padding-right: 0.4em">TXTVIEWER</p>
+            <p style="font-size: 15px" id="number"> | INIT</p>
+        </div>
+
+        <div class="main ab" onclick="hideButtons()" onkeydown='on_key_down()'>
+            <br>
+            <br>
+            <br>
+            <img style="width: 100%; height: 90%; object-fit: contain;" src="1.png" alt="1" id="imgbox">
+        </div>
+
+        <div class="wrapper">
+            <div class="dashed-box"> </div>
+            <div class="left-box" onclick="onClickLeft()"> </div>
+            <div class="right-box" onclick="onClickRight()"> </div>
+          </div>
+
+        <div class="navbar titleNav" id="all_button">
+            <div style="margin-right: 5em" class="button" onclick="onClickLeftT()">
+                <p> < 10 </p>
+            </div>
+            <div style="margin-right: 5em" class="button" onclick="onClickRightT()">
+                <p> 10 > </p>
+            </div>
+        </div>
+    </body>
+</html>
